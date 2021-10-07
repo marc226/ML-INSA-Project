@@ -144,6 +144,13 @@ auswahl()
 hochrechnen()
 mitteln()
 
+newpath = "ausgewaehlt"
+if os.path.exists(newpath):
+    os.remove(newpath)
+newpath = "duplicated"
+if os.path.exists(newpath):
+    os.remove(newpath)
+
 end_date = time.time()
 dauer = end_date - start_date
 print("Fertig! Gesamte Dauer: " + str(dauer))
