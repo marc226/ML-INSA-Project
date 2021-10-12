@@ -1,11 +1,13 @@
 import torch
+import load_data
 
 correct = 0
+trainedNet = load_data.net
 total = 0
 with torch.no_grad():
-    for data in test_loader:
+    for data in load_data.test_loader:
         images, labels = data
-        outputs = net(images)
+        outputs = trainedNet(images)
         _, predicted = torch.max(outputs.data, 1)
         total += labels.size(0)
         correct += (predicted == labels).sum().item()
