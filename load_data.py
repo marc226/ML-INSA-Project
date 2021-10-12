@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import torchvision.transforms as transforms
 from torch.utils.data.sampler import SubsetRandomSampler
 
-train_dir = './02big'
+train_dir = './03medium'
 test_dir = './test_images'
 
 transform = transforms.Compose(
@@ -47,7 +47,7 @@ loss_array = []
 loss_indicator = []
 step = 0
 
-for epoch in range(2):  # loop over the dataset multiple times
+for epoch in range(5):  # loop over the dataset multiple times
     print("epoch: " + str(epoch))
     running_loss = 0.0
     varEnum = enumerate(train_loader)

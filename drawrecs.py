@@ -58,8 +58,7 @@ def drawrec_lw(image_src, image_dest, x, y, size_x, size_y, linewidth):
     fig.savefig(image_dest)
 
 #Example (Bild1.png is some image in folder):
-entry1 = [1,1,100,100,3]
-entry2 = [200,200,20,40,2]
-list_rec = [entry1,entry2]
-drawrec_mult_lw("Bild1.png", "output_test.jpeg", list_rec)
-#drawrec("Bild1.png", 200, 300, 100, 100)
+#entry1 = [1,1,100,100,3]
+#entry2 = [200,200,20,40,2]
+#list_rec = [entry1,entry2]
+#drawrec_mult_lw("Bild1.png", "output_test.jpeg", list_rec)
