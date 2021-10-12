@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import torchvision.transforms as transforms
 from torch.utils.data.sampler import SubsetRandomSampler
 
-train_dir = './03medium'
+train_dir = './02big'
 test_dir = './test_images'
 
 transform = transforms.Compose(
