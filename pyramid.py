@@ -1,3 +1,6 @@
+import torch
+import cv2
+
 def pyramid(image, scale=1.5, minSize=(30, 30)):
     # yield the original image
     yield image
