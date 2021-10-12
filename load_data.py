@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import torchvision.transforms as transforms
 from torch.utils.data.sampler import SubsetRandomSampler
 
-train_dir = './02big'
+train_dir = './03medium'
 test_dir = './test_images'
 
 transform = transforms.Compose(
@@ -42,6 +42,11 @@ net = Net()
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
 
+#Visual variables
+loss_array = []
+loss_indicator = []
+step = 0
+
 for epoch in range(2):  # loop over the dataset multiple times
     print("epoch: " + str(epoch))
     running_loss = 0.0
@@ -65,11 +70,31 @@ for epoch in range(2):  # loop over the dataset multiple times
         if i % 200 == 199:    # print every 2000 mini-batches
             print('[%d, %5d] loss: %.3f' %
                   (epoch + 1, i + 1, running_loss / 200))
+            step += 200
+            loss_array.append(running_loss/200)
+            loss_indicator.append(step)
             running_loss = 0.0
+
 
 print('Finished Training')
 # for data, target in train_loader:
 
+"""
+test_loss = 0.0
+count = 0
 for i, data in enumerate(test_loader):
+    inputs, labels = data
+    outputs = net(inputs)
+    loss = criterion(outputs, labels)
+    count = i
+    test_loss = loss.item
+avg_loss = test_loss / count
+"""
 
-
+"""
+plt.title("Loss function by iteration")
+plt.xlabel("step")
+plt.ylabel("Average loss")
+plt.plot( loss_indicator,loss_array, color ="red")
+plt.show()
+"""
