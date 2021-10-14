@@ -50,7 +50,7 @@ epoch_array = []
 epoch_indicator = []
 epoch_index = 1
 epoch_indicator.append(0)
-epoch_array(0)
+epoch_array.append(1)
 
 for epoch in range(2):  # loop over the dataset multiple times
     print("epoch: " + str(epoch))
