@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import torchvision.transforms as transforms
 from torch.utils.data.sampler import SubsetRandomSampler
 
-train_dir = './03medium'
+train_dir = './01small'
 test_dir = './test_images'
 
 transform = transforms.Compose(
@@ -46,8 +46,13 @@ optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
 loss_array = []
 loss_indicator = []
 step = 0
+epoch_array = []
+epoch_indicator = []
+epoch_index = 1
+epoch_indicator.append(0)
+epoch_array(0)
 
-for epoch in range(5):  # loop over the dataset multiple times
+for epoch in range(2):  # loop over the dataset multiple times
     print("epoch: " + str(epoch))
     running_loss = 0.0
     varEnum = enumerate(train_loader)
@@ -74,6 +79,9 @@ for epoch in range(5):  # loop over the dataset multiple times
             loss_array.append(running_loss/200)
             loss_indicator.append(step)
             running_loss = 0.0
+    epoch_indicator.append(step)
+    epoch_array.append(epoch_index)
+    epoch_index += 1
 
 
 print('Finished Training')
@@ -91,10 +99,19 @@ for i, data in enumerate(test_loader):
 avg_loss = test_loss / count
 """
 
-"""
-plt.title("Loss function by iteration")
-plt.xlabel("step")
-plt.ylabel("Average loss")
-plt.plot( loss_indicator,loss_array, color ="red")
+
+fig, loss_plot = plt.subplots()
+loss_plot.plot( loss_indicator,loss_array, color ="red", label = "Loss function")
+loss_plot.set_xlabel("Batches processed")
+loss_plot.set_ylabel("Average loss function")
+
+epoch_plot = loss_plot.twinx()
+epoch_plot.step( epoch_indicator, epoch_array, color = "gray", label = "Epoch")
+epoch_plot.set_ylabel("Epoch #")
+plt.legend()
 plt.show()
-"""
+# save the plot as a file
+fig.savefig('Loss function_epoch plot.jpg',
+            format='jpeg',
+            dpi=100,
+            bbox_inches='tight')
