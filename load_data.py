@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import torchvision.transforms as transforms
 from torch.utils.data.sampler import SubsetRandomSampler
 
-train_dir = './01small'
+train_dir = './02big'
 test_dir = './test_images'
 
 transform = transforms.Compose(
@@ -40,7 +40,7 @@ net = Net()
 
 # for epoch in range(1, n_epochs+1):
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
+optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9, weight_decay=0.0001)
 
 #Visual variables
 loss_array = []
@@ -52,7 +52,7 @@ epoch_index = 1
 epoch_indicator.append(0)
 epoch_array.append(1)
 
-for epoch in range(2):  # loop over the dataset multiple times
+for epoch in range(10):  # loop over the dataset multiple times
     print("epoch: " + str(epoch))
     running_loss = 0.0
     varEnum = enumerate(train_loader)
