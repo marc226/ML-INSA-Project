@@ -7,7 +7,6 @@ import nms
 
 #net = load_data.net
 
-#bboxes2 = pyramid_sliding_window_detection(net,np.array(gray, dtype='float32'), 1.2, 36, 36, 5)
 
 
 print("load test image")
@@ -17,6 +16,8 @@ gray = cv2.cvtColor(test_img, cv2.COLOR_BGR2GRAY).astype(float)
 gray = gray/128.0 - 1.0
 
 print("building bboxes")
+
+#bboxes2 = pyramid_sliding_window_detection(net,np.array(gray, dtype='float32'), 1.2, 36, 36, 5)
 
 import bboxes
 bboxes2 = bboxes.bboxes1
