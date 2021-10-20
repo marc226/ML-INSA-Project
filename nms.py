@@ -24,7 +24,13 @@ def nms(dets, thresh):
         h = np.maximum(0.0, yy2 - yy1 + 1)
         inter = w * h
         ovr = inter / (areas[i] + areas[order[1:]] - inter)
-
+        i = 0
+        nn = 0
+        for entry in inter:
+            if(entry == 0.0):
+                i += 1
+            else: nn += 1
+        print(str(i) + " times zero overlap; " + str(nn) + " times overlap detected.")
         inds = np.where(ovr <= thresh)[0]
         order = order[inds + 1]
 
