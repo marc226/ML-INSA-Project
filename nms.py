@@ -6,7 +6,7 @@ def nms(dets, thresh):
     y1 = dets[:, 1]
     x2 = dets[:, 2]
     y2 = dets[:, 3]
-    scores = dets[:, 4]#should be 4, but we have no 4th... :/
+    scores = dets[:, 4]
 
     areas = (x2 - x1 + 1) * (y2 - y1 + 1)
     order = scores.argsort()[::-1]
@@ -84,10 +84,13 @@ def nms_bboxes(bboxes):
     for scale in bboxes:
         array = bboxes[1]
         for element in scale[1]:
-            toAdd = [[element[0], element[1], element[2]-element[0], element[3]-element[1]], element[4]]
+            toAdd = [[element[0], element[1], element[2]-element[0], element[3]-element[1], element[4]]]
             arr_boxes += toAdd
             #arr_boxes.append(to_app)
     arr_boxes_2 = np.array(arr_boxes)
-    result = nms(arr_boxes_2, 0.3)
+    if (len(arr_boxes_2) == 0):
+        print("No faces found!")
+        return ([],[])
+    result = nms(arr_boxes_2, 0.1)
     return (arr_boxes,result)
 
