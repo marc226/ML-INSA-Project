@@ -8,7 +8,24 @@ import matplotlib.pyplot as plt
 import torchvision.transforms as transforms
 from torch.utils.data.sampler import SubsetRandomSampler
 
-train_dir = './02big'
+
+def test_after_epoch(index):
+    correct = 0
+    total = 0
+    with torch.no_grad():
+        for dataTest in test_loader:
+            imagesTest, labelsTest = dataTest
+            outputsTest = net(imagesTest)
+            _, predicted = torch.max(outputsTest.data, 1)
+            total += labelsTest.size(0)
+            correct += (predicted == labelsTest).sum().item()
+    print("Testing")
+    overfit_index.append(index)
+    overfit_array.append(100 * correct / total)
+    print('Accuracy of the network on the 10000 test images: %d %%' % (
+            100 * correct / total))
+
+train_dir = './01small'
 test_dir = './test_images'
 
 transform = transforms.Compose(
@@ -40,7 +57,7 @@ net = Net()
 
 # for epoch in range(1, n_epochs+1):
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
+optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9, weight_decay=0.0001)
 """, weight_decay=0.0001"""
 
 #Visual variables
@@ -52,12 +69,15 @@ epoch_indicator = []
 epoch_index = 1
 epoch_indicator.append(0)
 epoch_array.append(1)
+overfit_index = []
+overfit_array = []
+epoch_count = 0
 
-for epoch in range(4):  # loop over the dataset multiple times
+for epoch in range(14):  # loop over the dataset multiple times
     print("epoch: " + str(epoch))
     running_loss = 0.0
     varEnum = enumerate(train_loader)
-
+    test_after_epoch(epoch)
     for i, data in enumerate(train_loader):
         # get the inputs; data is a list of [inputs, labels]
         inputs, labels = data
@@ -100,6 +120,11 @@ for i, data in enumerate(test_loader):
 avg_loss = test_loss / count
 """
 
+with open('overfitting_data.txt', 'a') as writeTo:
+    writeTo.write("\n\n")
+    writeTo.write(str(overfit_index))
+    writeTo.write("\n")
+    writeTo.write((str(overfit_array)))
 
 fig, loss_plot = plt.subplots()
 loss_plot.plot( loss_indicator,loss_array, color ="red", label = "Loss function")
@@ -111,8 +136,18 @@ epoch_plot.step( epoch_indicator, epoch_array, color = "gray", label = "Epoch")
 epoch_plot.set_ylabel("Epoch #")
 plt.legend()
 plt.show()
-# save the plot as a file
 fig.savefig('Loss function_epoch plot.jpg',
             format='jpeg',
             dpi=100,
             bbox_inches='tight')
+
+fig2 = plt.figure(2)
+plt.title("Overfitting curve")
+plt.plot(overfit_index, overfit_array)
+plt.xlabel("epoch")
+plt.ylabel("accuracy")
+plt.show()
+# save the plot as a file
+
+
+
