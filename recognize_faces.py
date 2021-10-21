@@ -2,25 +2,28 @@ import numpy as np
 import cv2
 import drawrecs
 import nms
-#from pyramid import pyramid_sliding_window_detection
-#import load_data
+from pyramid import pyramid_sliding_window_detection
+import load_data
 
-#net = load_data.net
-
+net = load_data.net
+#with open('trainednetwork.txt', 'a') as writeTo:
+#    writeTo.write(str(net))
 
 
 print("load test image")
 
-test_img = cv2.imread("./testimg.jpg")
+image_for_tracking = "./testbild2.jpg"
+
+test_img = cv2.imread(image_for_tracking)
 gray = cv2.cvtColor(test_img, cv2.COLOR_BGR2GRAY).astype(float)
 gray = gray/128.0 - 1.0
 
 print("building bboxes")
 
-#bboxes2 = pyramid_sliding_window_detection(net,np.array(gray, dtype='float32'), 1.2, 36, 36, 5)
+bboxes2 = pyramid_sliding_window_detection(net,np.array(gray, dtype='float32'), 1.2, 36, 36, 5)
 
-import bboxes
-bboxes2 = bboxes.bboxes1
+#import bboxes
+#bboxes2 = bboxes.bboxes1
 
 
 #Zum Testen kann bboxes als txt file gespeichert werden, um von da weiter zu arbeiten, ohne das Netzwerk immer neu aufbauen zu müssen
@@ -29,7 +32,7 @@ with open('bboxes.txt', 'a') as writeTo:
 print("bboxed built!")
 
 arr_boxes, keep = nms.nms_bboxes(bboxes2)
-
+print("nms sorted from " + str(len(arr_boxes)) + " to " + str(len(keep)))
 testrecs = []
 
 for scale in bboxes2:
@@ -47,7 +50,7 @@ for to_keep in keep:
     to_draw += [arr_boxes[to_keep]]
 
 
-drawrecs.drawrec_mult("testimg.jpg", "testout.jpg", to_draw)
-drawrecs.drawrec_mult("testimg.jpg", "testout_mit_allen.jpg", testrecs)
+drawrecs.drawrec_mult(image_for_tracking, "testout.jpg", to_draw)
+drawrecs.drawrec_mult(image_for_tracking, "testout_mit_allen.jpg", testrecs)
 
 print("Image drawn. Exiting.")
