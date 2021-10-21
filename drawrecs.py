@@ -13,7 +13,7 @@ def drawrec_mult(image_src, image_dest, rect_list):
         y = rect[1]
         size_x = rect[2]
         size_y = rect[3]
-        draw.rectangle(((x, y), (x+size_x, y+size_y)), outline = "red")
+        draw.rectangle(((x, y), (size_x, size_y)), outline = "red")
     source_img.save(image_dest, "JPEG")
 
 #Takes an address of an image, a destination address, and a list of rectangles

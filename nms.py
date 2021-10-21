@@ -90,13 +90,13 @@ def nms_bboxes(bboxes):
     for scale in bboxes:
         array = bboxes[1]
         for element in scale[1]:
-            toAdd = [[element[0], element[1], element[2]-element[0], element[3]-element[1], element[4]]]
+            toAdd = [[element[0], element[1], element[2], element[3], element[4]]]
             arr_boxes += toAdd
             #arr_boxes.append(to_app)
     arr_boxes_2 = np.array(arr_boxes)
     if (len(arr_boxes_2) == 0):
         print("No faces found!")
         return ([],[])
-    result = nms(arr_boxes_2, 0.1)
+    result = nms(arr_boxes_2, 0.5)
     return (arr_boxes,result)
 
