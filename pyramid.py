@@ -54,7 +54,7 @@ def pyramid_sliding_window_detection(net, image, scale, winW, winH, stepSize):
             # (softmax dim parameter : dim=0->rows add up to 1, dim=1->rows add up to 1)
             softmax = torch.nn.functional.softmax(output, dim=1)
             if softmax[0][1] >= 0.9:
-                detected_faces.append((x, y))
+                detected_faces.append((x, y, float(softmax[0][1])))
 
 
         #Add the detected faces and the corresponding factors to the all_faces variable
@@ -68,11 +68,16 @@ def pyramid_sliding_window_detection(net, image, scale, winW, winH, stepSize):
             # in this line we both :
             # - change the tuple from a 2d (startX, startY) to a 4d (startX, startY, endX, endY)
             # - multiply each number of the tuple by the current scale factor
+            #if(not i ==0):
+            prob = (all_detected_faces[j][1][i][2])
             all_detected_faces[j][1][i] = (
                                               all_detected_faces[j][1][i][0] * all_detected_faces[j][0], all_detected_faces[j][1][i][1] * all_detected_faces[j][0]
                                           ) + (
                                             (all_detected_faces[j][1][i][0] + winW)*all_detected_faces[j][0], (all_detected_faces[j][1][i][1] + winH)*all_detected_faces[j][0]
             )
+            #if(not i==0):
+            tup = (all_detected_faces[j][1][i][0], all_detected_faces[j][1][i][1],all_detected_faces[j][1][i][2], all_detected_faces[j][1][i][3], prob)
+            all_detected_faces[j][1][i] = tup
     #print(all_detected_faces)
     # Concatenate detected faces into the same array
     final_detected_faces = all_detected_faces
