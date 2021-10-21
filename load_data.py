@@ -25,7 +25,7 @@ def test_after_epoch(index):
     print('Accuracy of the network on the 10000 test images: %d %%' % (
             100 * correct / total))
 
-train_dir = './01small'
+train_dir = './03medium'
 test_dir = './test_images'
 
 transform = transforms.Compose(
@@ -57,7 +57,7 @@ net = Net()
 
 # for epoch in range(1, n_epochs+1):
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9, weight_decay=0.0001)
+optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
 """, weight_decay=0.0001"""
 
 #Visual variables
@@ -73,11 +73,12 @@ overfit_index = []
 overfit_array = []
 epoch_count = 0
 
-for epoch in range(14):  # loop over the dataset multiple times
+for epoch in range(30):  # loop over the dataset multiple times
     print("epoch: " + str(epoch))
     running_loss = 0.0
     varEnum = enumerate(train_loader)
-    test_after_epoch(epoch)
+    if epoch > 0:
+        test_after_epoch(epoch)
     for i, data in enumerate(train_loader):
         # get the inputs; data is a list of [inputs, labels]
         inputs, labels = data
