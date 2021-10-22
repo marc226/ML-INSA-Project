@@ -82,4 +82,3 @@ def pyramid_sliding_window_detection(net, image, scale, winW, winH, stepSize):
     # Concatenate detected faces into the same array
     final_detected_faces = all_detected_faces
     return final_detected_faces
-

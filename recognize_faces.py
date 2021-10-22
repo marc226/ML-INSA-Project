@@ -3,15 +3,17 @@ import time
 start_date = time.time()
 print("Start time: " + str(time.strftime("%d.%m.%Y %H:%M:%S")))
 
+print("Info: Sometimes you have to restart the program, if in the second epoch the loss is still exactly 0.693")
+
 import numpy as np
 import cv2
 import drawrecs
 import nms
 from pyramid import pyramid_sliding_window_detection
-import load_data
+import build_and_train_net
 
 #build neural network
-net = load_data.net
+net = build_and_train_net.net
 
 end_date = time.time()
 dauer = end_date - start_date
@@ -62,7 +64,9 @@ def detect_multiple(img_array):
         det_path = img + "_detected.jpg"
         rec_faces(filepath, det_path)
 
-img_array = ["woman-ge619f8218_640","testbild2","testimg3","testimg","Testimg_gray", "Testimg_gray_lowcontrast", "WIN_20211021_12_46_40_Pro","WIN_20211021_12_46_51_Pro"]
+img_array = ["images_for_detection/woman-ge619f8218_640","images_for_detection/testbild2","images_for_detection/testimg3",
+"images_for_detection/testimg","images_for_detection/Testimg_gray",
+ "images_for_detection/WIN_20211021_12_46_40_Pro","images_for_detection/WIN_20211021_12_46_51_Pro"]
 
 detect_multiple(img_array)
 
