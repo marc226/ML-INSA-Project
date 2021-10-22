@@ -22,7 +22,7 @@ def test_after_epoch(index):
     print("Testing")
     overfit_index.append(index)
     overfit_array.append(100 * correct / total)
-    print('Accuracy of the network on the 10000 test images: %d %%' % (
+    print('Accuracy of the network on the test images: %d %%' % (
             100 * correct / total))
 
 train_dir = './03medium'
@@ -73,7 +73,7 @@ overfit_index = []
 overfit_array = []
 epoch_count = 0
 
-for epoch in range(30):  # loop over the dataset multiple times
+for epoch in range(16):  # loop over the dataset multiple times
     print("epoch: " + str(epoch))
     running_loss = 0.0
     varEnum = enumerate(train_loader)
