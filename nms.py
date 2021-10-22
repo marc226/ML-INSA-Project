@@ -97,6 +97,6 @@ def nms_bboxes(bboxes):
     if (len(arr_boxes_2) == 0):
         print("No faces found!")
         return ([],[])
-    result = nms(arr_boxes_2, 0.5)
+    result = nms(arr_boxes_2, 0.01)
     return (arr_boxes,result)
 
