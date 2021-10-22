@@ -30,7 +30,6 @@ def nms(dets, thresh):
             if(entry == 0.0):
                 i += 1
             else: nn += 1
-        print(str(i) + " times zero overlap; " + str(nn) + " times overlap detected.")
         inds = np.where(ovr <= thresh)[0]
         order = order[inds + 1]
 
